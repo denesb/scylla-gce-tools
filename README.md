@@ -4,6 +4,8 @@ Simplistic scripts to set up a scylla cluster in GCE.
 
 ## Quick and dirty tutorial
 
+Assumes you have the [Google Cloud SDK](https://cloud.google.com/sdk/) installed and ready to use.
+
 ```
 cp example-config.sh config.sh
 ```
@@ -34,7 +36,7 @@ sudo systemctl start scylla-server
 
 ## Bonus - monitoring
 
-Assumes you have a GCE node already with the [scylla monitoring repo](https://github.com/scylladb/scylla-grafana-monitoring) in the home directory and have docker installed and running.
+Assumes you have a GCE box already with the [scylla monitoring repo](https://github.com/scylladb/scylla-grafana-monitoring) in the home directory and have docker installed and running.
 
 ```
 ./setup_monitoring.sh
