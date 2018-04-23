@@ -4,6 +4,7 @@ source ./config.sh
 
 prep_machine() {
     local node=$1
+    shift 1
 
     echo $node
 
@@ -15,10 +16,10 @@ prep_machine() {
         gcloud compute scp --zone=${ZONE} ${rpm} ${node}:~/
     done
 
-    gcloud compute ssh --zone=${ZONE} ${node} --command="./prep.sh ${node}"
+    gcloud compute ssh --zone=${ZONE} ${node} --command="./prep.sh ${node} ${@}"
 }
 
 for node in $NODES
 do
-    prep_machine $node &> ${node}.log
+    prep_machine $node $@ &> ${node}.log
 done
