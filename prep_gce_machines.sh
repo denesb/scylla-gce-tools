@@ -8,7 +8,7 @@ prep_machine() {
 
     echo $node
 
-    gcloud compute scp --zone=${ZONE} ./prep_gce_machine.sh ${node}:~/prep.sh
+    gcloud compute scp --zone=${ZONE} ./node_prep.sh ${node}:~/prep.sh
     gcloud compute scp --zone=${ZONE} ./config.sh ${node}:~/config.sh
 
     for rpm in `ls *.rpm`
@@ -21,7 +21,7 @@ prep_machine() {
         gcloud compute scp --zone=${ZONE} ~/.tmux.conf ${node}:~/
     fi
 
-    gcloud compute ssh --zone=${ZONE} ${node} --command="./prep.sh ${node} ${@}"
+    gcloud compute ssh --zone=${ZONE} ${node} --command="chmod u+x ./prep.sh && ./prep.sh ${node} ${@}"
 }
 
 for node in $NODES
