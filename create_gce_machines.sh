@@ -17,7 +17,7 @@ do
         --local-ssd interface="NVME" \
         --image "centos-7-v20180401" \
         --image-project "centos-cloud" \
-        --boot-disk-size "20" \
+        --boot-disk-size "200" \
         --boot-disk-type "pd-standard" \
         --boot-disk-device-name "${node}"
 done
