@@ -16,6 +16,11 @@ prep_machine() {
         gcloud compute scp --zone=${ZONE} ${rpm} ${node}:~/
     done
 
+    if [ -e ~/.tmux.conf ]
+    then
+        gcloud compute scp --zone=${ZONE} ~/.tmux.conf ${node}:~/
+    fi
+
     gcloud compute ssh --zone=${ZONE} ${node} --command="./prep.sh ${node} ${@}"
 }
 
