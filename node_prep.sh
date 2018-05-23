@@ -50,3 +50,5 @@ then
     cd /usr/lib/systemd/system
     sudo sed -i "s#/usr/bin/scylla#/tmp/scylla#" scylla-server.service
 fi
+
+echo "Done"
