@@ -26,5 +26,7 @@ prep_machine() {
 
 for node in $NODES
 do
-    prep_machine $node $@ &> ${node}.log
+    prep_machine $node $@ &> ${node}.log &
 done
+
+wait
