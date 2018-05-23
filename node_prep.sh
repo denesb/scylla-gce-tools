@@ -34,6 +34,36 @@ if [ $DEV_MODE -eq 1 ]
 then
     sudo yum install git -y
     git clone https://github.com/scylladb/scylla.git && cd scylla && git submodule update --init --recursive
+
+    cd scylla
+
+    if [ "${SCYLLA_REMOTE_NAME}" != "" ] && [ "${SCYLLA_REMOTE_URL}" != "" ]
+    then
+
+        git remote add ${SCYLLA_REMOTE_NAME} ${SCYLLA_REMOTE_URL}
+        git fetch ${SCYLLA_REMOTE_NAME}
+    fi
+
+    if [ "${SCYLLA_BRANCH}" != "" ]
+    then
+        git checkout ${SCYLLA_BRANCH}
+    fi
+
+    cd seastar
+
+    if [ "${SEASTAR_REMOTE_NAME}" != "" ] && [ "${SEASTAR_REMOTE_URL}" != "" ]
+    then
+
+        git remote add ${SEASTAR_REMOTE_NAME} ${SEASTAR_REMOTE_URL}
+        git fetch ${SEASTAR_REMOTE_NAME}
+    fi
+
+    if [ "${SEASTAR_BRANCH}" != "" ]
+    then
+        git checkout ${SEASTAR_BRANCH}
+    fi
+
+    cd ~
 fi
 
 sudo yum install tmux scylla-gdb scylla -y
