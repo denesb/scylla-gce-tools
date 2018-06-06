@@ -11,22 +11,6 @@ source ./config.sh
 HOSTNAME=$1
 SCYLLA_YAML=/etc/scylla/scylla.yaml
 
-DEV_MODE=0
-
-shift 1
-while [ $# -gt 0 ]
-do
-    case $1 in
-        "--dev-mode")
-            DEV_MODE=1
-            ;;
-        *)
-            echo "Unrecognized command line option: $1"
-            exit 1
-    esac
-    shift 1
-done
-
 sudo yum install epel-release -y
 sudo curl -o /etc/yum.repos.d/scylla.repo -L http://downloads.scylladb.com.s3.amazonaws.com/rpm/centos/scylla-nightly.repo
 
