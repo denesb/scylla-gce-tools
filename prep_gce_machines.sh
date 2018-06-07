@@ -24,12 +24,12 @@ prep_machine() {
         gcloud compute scp --zone=${ZONE} ~/.tmux.conf ${node}:~/
     fi
 
-    gcloud compute ssh --zone=${ZONE} ${node} --command="chmod u+x ./prep.sh && ./prep.sh ${node} ${@}"
+    gcloud compute ssh --zone=${ZONE} ${node} --command="chmod u+x ./prep.sh && ./prep.sh ${node}"
 }
 
 for node in $NODES
 do
-    prep_machine $node $@ &> ${node}.log &
+    prep_machine $node &> ${node}.log &
 done
 
 wait
