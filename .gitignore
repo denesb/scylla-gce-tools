@@ -1,3 +1,4 @@
 *.rpm
 *.log
 config.sh
+*.config.sh
