@@ -2,6 +2,7 @@
 # then change the values as you whish.
 PROJECT="my-gce-project"
 ZONE="us-east1-b"
+MACHINE_TYPE=n1-standard-4
 CLUSTER_NAME="My Benchmark Cluster"
 NODES="my-benchmark-node1 my-benchmark-node2 my-benchmark-node3"
 SEED_NODES="my-benchmark-node1"

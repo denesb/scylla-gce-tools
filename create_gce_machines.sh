@@ -7,7 +7,7 @@ do
     echo "Creating node ${node}..."
     gcloud beta compute --project "${PROJECT}" instances create "${node}" \
         --zone "${ZONE}" \
-        --machine-type "n1-highmem-16" \
+        --machine-type "${MACHINE_TYPE}" \
         --network "default" \
         --maintenance-policy "MIGRATE" \
         --service-account "skilled-adapter-452@appspot.gserviceaccount.com" \
