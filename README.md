@@ -22,17 +22,53 @@ Create symlinks to any `rpm`s you'd like to be copied to the servers.
 ./prep_gce_machines.sh
 ```
 
-This will install scylla nightly. SSH to each box to install the copied rpm(s):
+This will install scylla nightly and run `scylla_setup`.
+
+### Benchmarking/Testing RPM(s)
+
+Install the copied rpm(s) copied to the nodes:
 
 ```
-sudo rpm -i --force my-scylla.rpm
+./foreach_gce_machine.sh 'sudo rpm -i --force my-scylla.rpm'
 ```
 
-Then start the scylla cluster (on each box):
+Then start the scylla cluster:
 
 ```
-sudo systemctl start scylla-server
+./forech_gce_machine.sh 'sudo systemctl start scylla-server'
 ```
+
+### Benchmarking/Testing a custom scylla repo (DEV_MODE=1):
+
+Install scylla's build dependencies:
+
+```
+./forech_gce_machine.sh 'cd scylla; sudo ./install-dependencies.sh'
+```
+
+Configure and build scylla:
+
+```
+./forech_gce_machine.sh 'cd scylla; python3.4 ./configure.py --enable-dpdk --mode=release --static-boost --compiler=/opt/scylladb/bin/g++-7.3 --python python3.4 --ldflag=-Wl,-rpath=/opt/scylladb/lib64 --cflags=-I/opt/scylladb/include --with-antlr3=/opt/scylladb/bin/antlr3 && ninja-build build/release/scylla'
+```
+
+Copy scylla executable to `/tmp` where it will be picked up `systemctl`:
+
+```
+./forech_gce_machine.sh 'cp ./scylla/build/release/scylla /tmp'
+```
+
+Then start the scylla cluster:
+
+```
+./forech_gce_machine.sh 'sudo systemctl start scylla-server'
+```
+
+This will start the `/tmp/scylla` executable we "deployed" earlier.
+
+### Access to the machines
+
+Note that you can use still all the standard `gcloud` commands to manage/access the machines.
 
 ## Bonus - monitoring
 
