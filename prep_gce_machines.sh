@@ -11,13 +11,7 @@ prep_machine() {
     gcloud compute scp --zone=${ZONE} ./node_prep.sh ${node}:~/prep.sh
     gcloud compute scp --zone=${ZONE} ./config.sh ${node}:~/config.sh
 
-    if [ $DEV_MODE -ne 1 ]
-    then
-        for rpm in `ls *.rpm`
-        do
-            gcloud compute scp --zone=${ZONE} ${rpm} ${node}:~/
-        done
-    fi
+    gcloud compute scp --zone=${ZONE} ${SCYLLA_PACKAGE} ${node}:~/scylla-relocatable-package.tar.gz
 
     if [ -e ~/.tmux.conf ]
     then
