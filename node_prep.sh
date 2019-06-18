@@ -12,9 +12,9 @@ HOSTNAME=$1
 SCYLLA_YAML=/etc/scylla/scylla.yaml
 
 sudo yum install epel-release -y
-sudo curl -o /etc/yum.repos.d/scylla.repo -L http://downloads.scylladb.com.s3.amazonaws.com/rpm/centos/scylla-nightly.repo
+sudo curl -o /etc/yum.repos.d/scylla.repo -L http://downloads.scylladb.com.s3.amazonaws.com/rpm/unstable/centos/master/latest/scylla.repo
 
-sudo yum install tmux scylla-gdb scylla-tools scylla-jmx pystache python34-PyYAML -y
+sudo yum install tmux scylla-gdb scylla-tools scylla-jmx scylla -y
 
 mkdir scylla-relocatable-package
 mv ./scylla-relocatable-package.tar.gz scylla-relocatable-package
