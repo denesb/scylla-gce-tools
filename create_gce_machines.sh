@@ -15,7 +15,7 @@ do
         --min-cpu-platform "Automatic" \
         --local-ssd interface="NVME" \
         --local-ssd interface="NVME" \
-        --image "centos-7-v20190213" \
+        --image "centos-7-v20190813" \
         --image-project "centos-cloud" \
         --boot-disk-size "200" \
         --boot-disk-type "pd-standard" \
