@@ -2,7 +2,7 @@
 
 Simplistic scripts to set up a scylla cluster in GCE.
 
-## Quick and dirty tutorial
+## Creating the cluster
 
 Assumes you have the [Google Cloud SDK](https://cloud.google.com/sdk/) installed and ready to use.
 
@@ -11,64 +11,86 @@ cp example-config.sh config.sh
 ```
 
 Edit the config to your liking.
+Note that the required repositories ([scylla](https://github.com/scylladb/scylla.git),
+[scylla-tools-java](https://github.com/scylladb/scylla-tools-java.git) and
+[scylla-jmx](https://github.com/scylladb/scylla-jmx.git) should all have their
+respective relocatable rpms built. You can run the [build_reloc_rpms.sh](./build_reloc_rpms.sh)
+script to do that for you.
 
-```
+```sh
+# Creates the GCE VM instances.
 ./create_gce_machines.sh
-```
 
-Create symlinks to any `rpm`s you'd like to be copied to the servers.
-
-```
+# Copy the RPMs to the machines, install and configure scylla.
 ./prep_gce_machines.sh
 ```
 
-This will install scylla nightly and run `scylla_setup`.
+## Using the cluster
 
-### Benchmarking/Testing RPM(s)
-
-Install the copied rpm(s) copied to the nodes:
-
-```
-./foreach_gce_machine.sh 'sudo rpm -i --force my-scylla.rpm'
-```
-
-Then start the scylla cluster:
+Start scylla on all nodes:
 
 ```
 ./forech_gce_machine.sh 'sudo systemctl start scylla-server'
 ```
 
-### Benchmarking/Testing a custom scylla repo (DEV_MODE=1):
+You can use [foreach_gce_machine.sh](./foreach_gce_machine.sh) to execute
+arbitrary commands on all nodes.
 
-Install scylla's build dependencies:
+## Replacing the scylla executable with a new one
 
-```
-./forech_gce_machine.sh 'cd scylla; sudo ./install-dependencies.sh'
-```
-
-Configure and build scylla:
+Copy your scylla executable to the node on which you wish to replace the
+excutable:
 
 ```
-./forech_gce_machine.sh 'cd scylla; python3.4 ./configure.py --enable-dpdk --mode=release --static-boost --compiler=/opt/scylladb/bin/g++-7.3 --python python3.4 --ldflag=-Wl,-rpath=/opt/scylladb/lib64 --cflags=-I/opt/scylladb/include --with-antlr3=/opt/scylladb/bin/antlr3 && ninja-build build/release/scylla'
+gcloud compute scp /path/to/your/scylla my-example-node:~/scylla
 ```
 
-Copy scylla executable to `/tmp` where it will be picked up `systemctl`:
+Log on to the machine:
 
 ```
-./forech_gce_machine.sh 'cp ./scylla/build/release/scylla /tmp'
+gcloud compute ssh my-example-node
 ```
 
-Then start the scylla cluster:
+The remaining commands are to be executed on the node.
+
+Stop scylla:
 
 ```
-./forech_gce_machine.sh 'sudo systemctl start scylla-server'
+sudo systemctl stop scylla-server
 ```
 
-This will start the `/tmp/scylla` executable we "deployed" earlier.
+Replace the executable:
 
-### Access to the machines
+```
+sudo cp ~/scylla /opt/scylladb/libexec/scylla
+```
+
+You might want to make a backup of the replaced executable in case
+things go wrong and you'd like to revert.
+
+Patch the executable:
+
+```
+/opt/scylladb/bin/patchelf --set-interpreter /opt/scylladb/libreloc/ld.so /opt/scylladb/libexec/scylla
+```
+
+Then start scylla:
+
+```
+sudo systemctl start scylla-server
+```
+
+## Access to the machines
 
 Note that you can use still all the standard `gcloud` commands to manage/access the machines.
+
+## Troubleshooting
+
+Each script that executes commands on multiple nodes
+([prep_gce_machines.sh](./prep_gce_machines.sh) and
+[foreach_gce_machine.sh](./foreach_gce_machine.sh) will create a logfile
+for each node the command is executed on. The logfiles will be named:
+`{node_name}.log`.
 
 ## Bonus - monitoring
 
