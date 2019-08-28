@@ -10,4 +10,6 @@ MONITORING_NODE="my-monitoring-node"
 NIC="eth0"
 DISKS="/dev/nvme0n1,/dev/nvme0n2"
 
-SCYLLA_PACKAGE=/path/to/relocatable/scylla/package.tar.gz
+SCYLLA_REPO=/path/to/scylla
+SCYLLA_TOOLS_JAVA_REPO=/path/to/scylla-tools-java
+SCYLLA_JMX_REPO=/path/to/scylla-jmx

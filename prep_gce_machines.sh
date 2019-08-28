@@ -11,7 +11,11 @@ prep_machine() {
     gcloud compute scp --zone=${ZONE} ./node_prep.sh ${node}:~/prep.sh
     gcloud compute scp --zone=${ZONE} ./config.sh ${node}:~/config.sh
 
-    gcloud compute scp --zone=${ZONE} ${SCYLLA_PACKAGE} ${node}:~/scylla-relocatable-package.tar.gz
+    gcloud compute ssh --zone=${ZONE} ${node} --command="mkdir rpms"
+
+    gcloud compute scp --zone=${ZONE} ${SCYLLA_REPO}/build/redhat/RPMS/x86_64/*.rpm ${node}:~/rpms
+    gcloud compute scp --zone=${ZONE} ${SCYLLA_TOOLS_JAVA_REPO}/build/redhat/RPMS/noarch/*.rpm ${node}:~/rpms
+    gcloud compute scp --zone=${ZONE} ${SCYLLA_JMX_REPO}/build/redhat/RPMS/noarch/*.rpm ${node}:~/rpms
 
     if [ -e ~/.tmux.conf ]
     then

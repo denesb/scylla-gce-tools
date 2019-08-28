@@ -11,22 +11,8 @@ source ./config.sh
 HOSTNAME=$1
 SCYLLA_YAML=/etc/scylla/scylla.yaml
 
-sudo yum install epel-release -y
-sudo curl -o /etc/yum.repos.d/scylla.repo -L http://downloads.scylladb.com.s3.amazonaws.com/rpm/unstable/centos/master/latest/scylla.repo
-
-sudo yum install tmux scylla-gdb scylla-tools scylla-jmx scylla -y
-
-if [ ! -e scylla-relocatable-package ]
-then
-    mkdir scylla-relocatable-package
-    mv ./scylla-relocatable-package.tar.gz scylla-relocatable-package
-    cd scylla-relocatable-package
-    tar -xf ./scylla-relocatable-package.tar.gz
-else
-    cd scylla-relocatable-package
-fi
-
-sudo ./install.sh
+sudo yum install -y tmux
+sudo yum install -y ./rpms/*.rpm
 
 sudo sed -i "s/#cluster_name: '.*Cluster'/cluster_name: '${CLUSTER_NAME}'/" ${SCYLLA_YAML}
 sudo sed -i "s/seeds: \"127.0.0.1\"/seeds: \"${SEED_NODES}\"/" ${SCYLLA_YAML}
