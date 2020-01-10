@@ -89,11 +89,3 @@ Note that you can use still all the standard `gcloud` commands to manage/access 
 Each script that executes commands on multiple nodes (prepare and
 foreach) will create a logfile for each node the command is executed on.
 The logfiles will be named: `{node_name}.log`.
-
-## Bonus - monitoring
-
-Assumes you have a GCE box already with the [scylla monitoring repo](https://github.com/scylladb/scylla-grafana-monitoring) in the home directory and have docker installed and running.
-
-```
-./setup_monitoring.sh
-```
