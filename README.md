@@ -19,10 +19,10 @@ script to do that for you.
 
 ```sh
 # Creates the GCE VM instances.
-./create_gce_machines.sh
+./scylla-gce create
 
 # Copy the RPMs to the machines, install and configure scylla.
-./prep_gce_machines.sh
+./scylla-gce prepare
 ```
 
 ## Using the cluster
@@ -30,7 +30,7 @@ script to do that for you.
 Start scylla on all nodes:
 
 ```
-./forech_gce_machine.sh 'sudo systemctl start scylla-server'
+./scylla-gce foreach 'sudo systemctl start scylla-server'
 ```
 
 You can use [foreach_gce_machine.sh](./foreach_gce_machine.sh) to execute
@@ -86,11 +86,9 @@ Note that you can use still all the standard `gcloud` commands to manage/access 
 
 ## Troubleshooting
 
-Each script that executes commands on multiple nodes
-([prep_gce_machines.sh](./prep_gce_machines.sh) and
-[foreach_gce_machine.sh](./foreach_gce_machine.sh) will create a logfile
-for each node the command is executed on. The logfiles will be named:
-`{node_name}.log`.
+Each script that executes commands on multiple nodes (prepare and
+foreach) will create a logfile for each node the command is executed on.
+The logfiles will be named: `{node_name}.log`.
 
 ## Bonus - monitoring
 
