@@ -109,7 +109,7 @@ foreach_command() {
 
 if [ $# -lt 1 ]
 then
-    echo "Usage: $0 create|prepare|foreach"
+    echo "Usage: $0 build_reloc|create|prepare|foreach"
     exit 1
 fi
 
@@ -127,7 +127,7 @@ case $1 in
         cmd=foreach_command
         ;;
     *)
-        echo "Invalid command '${1}', valid commands are: create, prepare and foreach"
+        echo "Invalid command '${1}', valid commands are: build_reloc, create, prepare and foreach"
         exit 1
         ;;
 esac
