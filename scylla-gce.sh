@@ -100,6 +100,26 @@ prepare_command() {
     wait
 }
 
+upload_scylla() {
+    local node=$1
+    gcloud compute scp --zone=${ZONE} ./build/release/scylla ${node}:~/ &>> ${node}.log
+    gcloud compute ssh --zone=${ZONE} ${node} --command="/opt/scylladb/bin/patchelf --set-interpreter /opt/scylladb/libreloc/ld.so ~/scylla"
+    gcloud compute ssh --zone=${ZONE} ${node} --command="sudo cp -v ~/scylla /opt/scylladb/libexec/scylla"
+}
+
+iterate_command() {
+    pushd ${SCYLLA_REPO}
+    touch ./configure.py # to generate a new version
+    ninja build/release/scylla
+
+    for node in $NODES
+    do
+        upload_scylla ${node} &> ${node}.log &
+    done
+
+    wait
+}
+
 foreach_command() {
     args="${@}"
     for node in $NODES
@@ -116,6 +136,7 @@ usage() {
     echo "    build_reloc - build relocatable packages in all repositories (scylla.git, scylla-tools-java.git, scylla-jmx.git)"
     echo "    create - create the GCE machines"
     echo "    prepare - prepare the GCE machines, install and configure scylla"
+    echo "    iterate - compile and re-deploy a new scylla executable"
     echo "    foreach - execute a command on each machine"
 }
 
