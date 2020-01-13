@@ -101,10 +101,13 @@ prepare_command() {
 }
 
 foreach_command() {
+    args="${@}"
     for node in $NODES
     do
-        gcloud compute ssh --zone=${ZONE} ${node} --command="${@}" &> ${node}.log &
+        gcloud compute ssh --zone=${ZONE} ${node} --command="${args}" &> ${node}.log &
     done
+
+    wait
 }
 
 usage() {
