@@ -107,9 +107,19 @@ foreach_command() {
     done
 }
 
+usage() {
+    echo "Usage: $0 {command}"
+    echo "Commands:"
+    echo "    build_reloc - build relocatable packages in all repositories (scylla.git, scylla-tools-java.git, scylla-jmx.git)"
+    echo "    create - create the GCE machines"
+    echo "    prepare - prepare the GCE machines, install and configure scylla"
+    echo "    foreach - execute a command on each machine"
+}
+
 if [ $# -lt 1 ]
 then
-    echo "Usage: $0 build_reloc|create|prepare|foreach"
+    echo "Missing mandatory command argument."
+    usage
     exit 1
 fi
 
@@ -126,8 +136,17 @@ case $1 in
     foreach)
         cmd=foreach_command
         ;;
+    --help)
+        usage
+        exit 0
+        ;;
+    -h)
+        usage
+        exit 0
+        ;;
     *)
         echo "Invalid command '${1}', valid commands are: build_reloc, create, prepare and foreach"
+        usage
         exit 1
         ;;
 esac
