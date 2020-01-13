@@ -109,8 +109,6 @@ upload_scylla() {
 
 iterate_command() {
     pushd ${SCYLLA_REPO}
-    touch ./configure.py # to generate a new version
-    ninja build/release/scylla
 
     for node in $NODES
     do
