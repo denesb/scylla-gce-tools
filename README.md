@@ -39,7 +39,7 @@ command in an environment where these will succeed.
 
 Start scylla on all nodes:
 
-```
+```sh
 ./scylla-gce.sh foreach 'sudo systemctl start scylla-server'
 ```
 
@@ -48,7 +48,7 @@ arbitrary commands on all nodes.
 
 ## Replacing the scylla executable with a new one
 
-```
+```sh
 # Upload `${SCYLLA_REPO}/build/release/scylla` to each nodes.
 ./scylla-gce.sh upload
 ```
