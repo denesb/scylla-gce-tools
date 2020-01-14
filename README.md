@@ -2,28 +2,38 @@
 
 Simplistic scripts to set up a scylla cluster in GCE.
 
-## Creating the cluster
 
-Assumes you have the [Google Cloud SDK](https://cloud.google.com/sdk/) installed and ready to use.
+## Prerequisites
+
+A local clone of ([scylla](https://github.com/scylladb/scylla.git),
+[scylla-tools-java](https://github.com/scylladb/scylla-tools-java.git) and
+[scylla-jmx](https://github.com/scylladb/scylla-jmx.git).
+
+[Google Cloud SDK](https://cloud.google.com/sdk/) installed and ready to use.
+
+## Creating the cluster
 
 ```
 cp example-config.sh config.sh
 ```
 
-Edit the config to your liking.
-Note that the required repositories ([scylla](https://github.com/scylladb/scylla.git),
-[scylla-tools-java](https://github.com/scylladb/scylla-tools-java.git) and
-[scylla-jmx](https://github.com/scylladb/scylla-jmx.git) should all have their
-respective relocatable rpms built. You can run the [build_reloc_rpms.sh](./build_reloc_rpms.sh)
-script to do that for you.
+Edit the config to your liking. Note that you can also just use a
+simlink.
 
 ```sh
+# Build the relocatable packages in each required repository:
+./scylla-gce.sh build_reloc
+
 # Creates the GCE VM instances.
 ./scylla-gce.sh create
 
 # Copy the RPMs to the machines, install and configure scylla.
 ./scylla-gce.sh prepare
 ```
+
+Note that `scylla-gce.sh` will use your current environment to invoke
+the respective `build-reloc.py` scripts. So make sure you run this
+command in an environment where these will succeed.
 
 ## Using the cluster
 
