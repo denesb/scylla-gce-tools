@@ -49,6 +49,6 @@ Note that you can use still all the standard `gcloud` commands to manage/access 
 
 ## Troubleshooting
 
-Each script that executes commands on multiple nodes (prepare and
-foreach) will create a logfile for each node the command is executed on.
-The logfiles will be named: `{node_name}.log`.
+Each command that operates on multiple nodes will create a logfile for
+each node the command is executed on. The logfiles will be named:
+`{node_name}.log`.
