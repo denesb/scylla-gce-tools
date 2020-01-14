@@ -43,8 +43,8 @@ Start scylla on all nodes:
 ./scylla-gce.sh foreach 'sudo systemctl start scylla-server'
 ```
 
-You can use [foreach_gce_machine.sh](./foreach_gce_machine.sh) to execute
-arbitrary commands on all nodes.
+You can use `./scylla-gce.sh foreach` to execute arbitrary commands on
+all nodes.
 
 ## Replacing the scylla executable with a new one
 
