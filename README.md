@@ -38,46 +38,9 @@ arbitrary commands on all nodes.
 
 ## Replacing the scylla executable with a new one
 
-Copy your scylla executable to the node on which you wish to replace the
-excutable:
-
 ```
-gcloud compute scp /path/to/your/scylla my-example-node:~/scylla
-```
-
-Log on to the machine:
-
-```
-gcloud compute ssh my-example-node
-```
-
-The remaining commands are to be executed on the node.
-
-Stop scylla:
-
-```
-sudo systemctl stop scylla-server
-```
-
-Replace the executable:
-
-```
-sudo cp ~/scylla /opt/scylladb/libexec/scylla
-```
-
-You might want to make a backup of the replaced executable in case
-things go wrong and you'd like to revert.
-
-Patch the executable:
-
-```
-/opt/scylladb/bin/patchelf --set-interpreter /opt/scylladb/libreloc/ld.so /opt/scylladb/libexec/scylla
-```
-
-Then start scylla:
-
-```
-sudo systemctl start scylla-server
+# Upload `${SCYLLA_REPO}/build/release/scylla` to each nodes.
+./scylla-gce.sh upload
 ```
 
 ## Access to the machines
