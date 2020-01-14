@@ -5,7 +5,7 @@ Simplistic scripts to set up a scylla cluster in GCE.
 
 ## Prerequisites
 
-A local clone of ([scylla](https://github.com/scylladb/scylla.git),
+A local clone of [scylla](https://github.com/scylladb/scylla.git),
 [scylla-tools-java](https://github.com/scylladb/scylla-tools-java.git) and
 [scylla-jmx](https://github.com/scylladb/scylla-jmx.git).
 
