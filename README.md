@@ -33,7 +33,11 @@ simlink.
 
 Note that `scylla-gce.sh build_reloc` will use your current environment
 to invoke the respective `build-reloc.py` scripts. So make sure you run
-this command in an environment where these will succeed.
+this command in an environment where these will succeed. Also make sure
+that you have no more than a single version of each rpm built
+(in `$repo/build/redhat/RPMS/*/`, as the `prepare` command just copies
+all rpms found in these folders to the nodes and installation will fail
+with multiple versions present.
 
 ## Using the cluster
 
