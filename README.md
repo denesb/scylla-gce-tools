@@ -19,10 +19,10 @@ script to do that for you.
 
 ```sh
 # Creates the GCE VM instances.
-./scylla-gce create
+./scylla-gce.sh create
 
 # Copy the RPMs to the machines, install and configure scylla.
-./scylla-gce prepare
+./scylla-gce.sh prepare
 ```
 
 ## Using the cluster
@@ -30,7 +30,7 @@ script to do that for you.
 Start scylla on all nodes:
 
 ```
-./scylla-gce foreach 'sudo systemctl start scylla-server'
+./scylla-gce.sh foreach 'sudo systemctl start scylla-server'
 ```
 
 You can use [foreach_gce_machine.sh](./foreach_gce_machine.sh) to execute
