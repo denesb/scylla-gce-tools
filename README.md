@@ -31,9 +31,9 @@ simlink.
 ./scylla-gce.sh prepare
 ```
 
-Note that `scylla-gce.sh` will use your current environment to invoke
-the respective `build-reloc.py` scripts. So make sure you run this
-command in an environment where these will succeed.
+Note that `scylla-gce.sh build_reloc` will use your current environment
+to invoke the respective `build-reloc.py` scripts. So make sure you run
+this command in an environment where these will succeed.
 
 ## Using the cluster
 
